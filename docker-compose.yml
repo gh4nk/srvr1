@@ -40,6 +40,8 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock"
     environment:
       - VIRTUAL_HOST=${HOST_PORTAINER}
+      - LETSENCRYPT_HOST=${HOST_PORTAINER}
+      - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL}
   
   gitlab:
     image: gitlab/gitlab-ce
@@ -54,6 +56,8 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock"
     environment:
       - VIRTUAL_HOST=${HOST_GITLAB}
+      - LETSENCRYPT_HOST=${HOST_GITLAB}
+      - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL}
 
   nextcloud:
     image: nextcloud
@@ -69,15 +73,8 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock"
     environment:
       - VIRTUAL_HOST=${HOST_NEXTCLOUD}
-
-  wekan-db:
-    image: mongo:3.2.14
-    container_name: wekan-db
-    env_file: env/wekan-db.env
-    networks:
-      - db-network
-    volumes:
-      - "wekan-data:/data/db"
+      - LETSENCRYPT_HOST=${HOST_NEXTCLOUD}
+      - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL}
 
   teamspeak:
       image: polinux/teamspeak
